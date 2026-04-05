@@ -1,0 +1,37 @@
+name: Deploy Angular to GitHub Pages
+
+on:
+  push:
+    branches: [ main ] # Собирать сайт при каждом пуше в ветку main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Angular
+        run: npx ng build --configuration production --base-href /my-angular-app/
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Путь к папке со сборкой. Для новых версий Angular это обычно dist/название-проекта/browser
+          path: dist/my-angular-app/browser
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
