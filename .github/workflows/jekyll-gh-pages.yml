@@ -22,20 +22,22 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        # Добавляем указание папки
-        run: npm install
-        working-directory: my-angular-app
+        # Заставляем робота зайти в папку и установить зависимости
+        run: |
+          cd my-angular-app
+          npm install
 
       - name: Build Angular
-        # Добавляем указание папки и здесь
-        run: npx ng build --configuration production --base-href /my-angular-app/
-        working-directory: my-angular-app
+        # Заходим в папку, собираем проект
+        run: |
+          cd my-angular-app
+          npx ng build --configuration production --base-href /my-angular-app/
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Проверяем путь: папка проекта / dist / папка проекта / browser
-          path: my-angular-app/dist/my-angular-app/browser
+          # ВАЖНО: это путь, где лежит готовый index.html
+          path: my-angular-app/dist/my-angular-app/browser/
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
