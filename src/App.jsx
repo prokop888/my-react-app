@@ -4,8 +4,21 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
+const DOC_LINKS = [
+  { href: 'https://vite.dev/', icon: viteLogo, text: 'Explore Vite', imgClass: 'logo' },
+  { href: 'https://react.dev/', icon: reactLogo, text: 'Learn more', imgClass: 'button-icon' },
+];
+
+const SOCIAL_LINKS = [
+  { id: 'github-icon', href: 'https://github.com/vitejs/vite', label: 'GitHub' },
+  { id: 'discord-icon', href: 'https://chat.vite.dev/', label: 'Discord' },
+  { id: 'x-icon', href: 'https://x.com/vite_js', label: 'X.com' },
+  { id: 'bluesky-icon', href: 'https://bsky.app/profile/vite.dev', label: 'Bluesky' },
+];
+
 function App() {
   const [count, setCount] = useState(0)
+  const [message, setMessage] = useState('Нажми на кнопку ниже, чтобы изменить этот текст!')
 
   return (
     <>
@@ -17,16 +30,24 @@ function App() {
         </div>
         <div>
           <h1>Vite + React</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+            <p style={{ fontSize: '1.2rem', minHeight: '1.5em' }}>
+              {message}
+            </p>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+            <button
+              className="counter"
+              onClick={() => setCount((count) => count + 1)}
+            >
+              Count is {count}
+            </button>
+            <button
+              className="magic-button"
+              onClick={() => setMessage('Ура! Текст успешно изменен! 🎉')}
+            >
+              Нажми меня
+            </button>
+          </div>
       </section>
 
       <div className="ticks"></div>
@@ -34,80 +55,42 @@ function App() {
       <section id="next-steps">
         <div id="docs">
           <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
+            <use href="./icons.svg#documentation-icon"></use>
           </svg>
           <h2>Documentation</h2>
           <p>Your questions, answered</p>
           <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
+            {DOC_LINKS.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} target="_blank" rel="noopener noreferrer">
+                  <img className={link.imgClass} src={link.icon} alt="" />
+                  {link.text}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
         <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
+            <use href="./icons.svg#social-icon"></use>
           </svg>
           <h2>Connect with us</h2>
           <p>Join the Vite community</p>
           <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
+            {SOCIAL_LINKS.map((social) => (
+              <li key={social.id}>
+                <a href={social.href} target="_blank" rel="noopener noreferrer">
+                  <svg
+                    className="button-icon"
+                    role="presentation"
+                    aria-hidden="true"
+                  >
+                    <use href={`./icons.svg#${social.id}`}></use>
+                  </svg>
+                  {social.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
